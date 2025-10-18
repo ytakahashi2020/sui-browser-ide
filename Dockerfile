@@ -1,4 +1,5 @@
-FROM ytakahashi2020/sui-node:latest
+# Use multi-platform base image with explicit platform
+FROM --platform=linux/amd64 ytakahashi2020/sui-node:latest
 
 # Install Node.js and npm
 RUN apt-get update && apt-get install -y \
