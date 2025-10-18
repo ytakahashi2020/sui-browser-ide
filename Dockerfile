@@ -1,12 +1,28 @@
-# Use multi-platform base image with explicit platform
-FROM --platform=linux/amd64 ytakahashi2020/sui-node:latest
+# Use official Debian image for better platform compatibility
+FROM --platform=linux/amd64 debian:bullseye-slim
 
-# Install Node.js and npm
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     curl \
-    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    wget \
+    git \
+    build-essential \
+    libssl-dev \
+    pkg-config \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js 20
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Rust (required for Sui)
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Install Sui CLI
+RUN cargo install --locked --git https://github.com/MystenLabs/sui.git --tag testnet-v1.14.0 sui
 
 # Verify installations
 RUN node --version && npm --version && sui --version
