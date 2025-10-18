@@ -17,8 +17,14 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a mock sui command for now (to be replaced later)
-RUN echo '#!/bin/bash\necho "sui 1.14.0"' > /usr/local/bin/sui && chmod +x /usr/local/bin/sui
+# Install Rust (required for Sui)
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Install Sui CLI with optimized build settings for Railway
+ENV CARGO_NET_RETRY=10
+ENV CARGO_NET_TIMEOUT=300
+RUN cargo install --locked --git https://github.com/MystenLabs/sui.git --tag mainnet-v1.14.0 sui --bin sui
 
 # Verify installations
 RUN node --version && npm --version && sui --version
