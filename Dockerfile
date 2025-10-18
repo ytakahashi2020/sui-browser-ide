@@ -24,7 +24,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 # Install Sui CLI with optimized build settings for Railway
 ENV CARGO_NET_RETRY=10
 ENV CARGO_NET_TIMEOUT=300
-RUN cargo install --locked --git https://github.com/MystenLabs/sui.git --tag mainnet-v1.14.0 sui --bin sui
+RUN cargo install --locked --git https://github.com/MystenLabs/sui.git --tag testnet-v1.57.2 sui --bin sui
 
 # Verify installations
 RUN node --version && npm --version && sui --version
