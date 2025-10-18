@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.local
+workspace/*/build/
+workspace/*/Move.lock
+*.log
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.iml

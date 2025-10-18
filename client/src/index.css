@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* React Split Pane Styles */
+.gutter {
+  background-color: #374151;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.gutter:hover {
+  background-color: #4b5563;
+}
+
+.gutter.gutter-horizontal {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+YMAxR8//791/8JAR8//z9i4DZvx8VH7kMCACaKEcOQgILSAAAAASUVORK5CYII=');
+  cursor: col-resize;
+  width: 6px;
+}
+
+.gutter.gutter-vertical {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFCAMAAABl/6zIAAAABlBMVEUAAADMzMzIT8AyAAAAAXRSTlMAQObYZgAAABRJREFUeF7NwIEAAAAAgKD9qdeocAAAQAABjEi8ogAAAABJRU5ErkJggg==');
+  cursor: row-resize;
+  height: 6px;
+}
+
+.gutter.gutter-horizontal:hover {
+  background-color: #6366f1;
+}
+
+.gutter.gutter-vertical:hover {
+  background-color: #6366f1;
+}

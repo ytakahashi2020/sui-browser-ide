@@ -1,0 +1,8 @@
+node_modules
+workspace
+.git
+.gitignore
+*.md
+dist
+.env
+.env.local
