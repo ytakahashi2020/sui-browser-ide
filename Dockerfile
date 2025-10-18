@@ -48,5 +48,9 @@ COPY . .
 # Build client
 RUN cd client && npm run build
 
-EXPOSE 3000 3002
-CMD ["npm", "run", "dev"]
+EXPOSE $PORT
+
+# For production
+ENV NODE_ENV=production
+
+CMD ["npm", "start"]

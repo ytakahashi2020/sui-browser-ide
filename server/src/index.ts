@@ -13,10 +13,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const port = 3002;
+const port = parseInt(process.env.PORT || '3002', 10);
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
+
+// Serve static files from client build
+const clientDistPath = path.join(__dirname, '../../client/dist');
+app.use(express.static(clientDistPath));
 
 const server = createServer(app);
 const wss = new WebSocketServer({ server });
@@ -200,6 +204,14 @@ app.get('/api/files/list', async (req, res) => {
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
   }
+});
+
+// Catch all handler: send back React's index.html file for client-side routing
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'API endpoint not found' });
+  }
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
 wss.on('connection', (ws) => {
@@ -397,8 +409,8 @@ wss.on('connection', (ws) => {
 
 async function startServer() {
   await ensureWorkspaceExists();
-  server.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+  server.listen(port, '0.0.0.0', () => {
+    console.log(`Server running at http://0.0.0.0:${port}`);
   });
 }
 

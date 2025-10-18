@@ -35,7 +35,7 @@ export const Terminal: React.FC = () => {
     xtermRef.current = term;
     fitAddonRef.current = fitAddon;
 
-    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:3002';
+    const wsUrl = import.meta.env.VITE_WS_URL || `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}`;
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
