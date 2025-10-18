@@ -45,8 +45,9 @@ RUN cd client && npm install
 # Copy the rest
 COPY . .
 
-# Build client
+# Build client and server
 RUN cd client && npm run build
+RUN cd server && npm run build
 
 EXPOSE $PORT
 
