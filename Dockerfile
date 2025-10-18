@@ -17,12 +17,13 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Rust (required for Sui)
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
-
-# Install Sui CLI
-RUN cargo install --locked --git https://github.com/MystenLabs/sui.git --tag testnet-v1.14.0 sui
+# Download and install pre-built Sui binary
+RUN wget -O /tmp/sui-ubuntu-x86_64.tgz https://github.com/MystenLabs/sui/releases/download/testnet-v1.14.0/sui-ubuntu-x86_64.tgz \
+    && tar -xzf /tmp/sui-ubuntu-x86_64.tgz -C /tmp \
+    && mv /tmp/sui-ubuntu-x86_64/sui /usr/local/bin/sui \
+    && chmod +x /usr/local/bin/sui \
+    && rm -rf /tmp/sui-ubuntu-x86_64* \
+    && sui --version
 
 # Verify installations
 RUN node --version && npm --version && sui --version
