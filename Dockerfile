@@ -17,14 +17,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Rust (required for Sui)
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
-
-# Install Sui CLI with optimized build settings for Railway
-ENV CARGO_NET_RETRY=10
-ENV CARGO_NET_TIMEOUT=300
-RUN cargo install --locked --git https://github.com/MystenLabs/sui.git --tag testnet-v1.57.2 sui --bin sui
+# Install Sui using suiup (official version manager with pre-built binaries)
+RUN curl -sSfL https://raw.githubusercontent.com/MystenLabs/suiup/main/install.sh | sh \
+    && ~/.local/bin/suiup install sui@testnet \
+    && ln -sf ~/.local/bin/sui /usr/local/bin/sui
 
 # Verify installations
 RUN node --version && npm --version && sui --version
