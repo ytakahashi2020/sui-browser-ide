@@ -41,7 +41,7 @@ RUN cd client && npm install
 # Now copy the rest of the app
 COPY . .
 
-# Build client assets
+# Build client assets　
 RUN cd client && npm run build
 
 EXPOSE 3000 3002
